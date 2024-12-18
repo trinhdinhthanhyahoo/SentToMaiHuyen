@@ -69,7 +69,6 @@
         }, 5000);
         
         gift.addEventListener('click', () => {
-            // Xóa timeout khi gift được click
             clearTimeout(autoRemoveTimeout);
             
             const giftGif = document.createElement('img');
@@ -94,10 +93,10 @@
                     
                     setTimeout(() => {
                         boom.remove();
+                        // Chuyển hướng sau khi boom biến mất
                         window.location.href = 'letter.html';
                     }, 2000);
                 }, 3000);
-              
             }, 100);
             
             gift.remove();
