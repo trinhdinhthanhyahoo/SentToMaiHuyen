@@ -9,6 +9,172 @@
 </head>
 
 <body>
+  <!-- Thêm phần tuyết rơi -->
+  <div class="snowflakes" aria-hidden="true">
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+  </div>
+  
+  <!-- Thêm phần santa-sled -->
+  <script>
+    function createSantaSled() {
+        if (document.querySelector('.santa-sled')) {
+            return;
+        }
+        
+        const sled = document.createElement('img');
+        sled.src = 'img/santa-sled.png';
+        sled.className = 'santa-sled';
+        
+        const startY = window.innerHeight / 4;
+        sled.style.top = startY + 'px';
+        
+        document.body.appendChild(sled);
+        
+        // Thả quà mỗi 3 giây
+        const dropInterval = setInterval(() => {
+            dropGift(sled);
+        }, 3000);
+        
+        sled.addEventListener('animationend', () => {
+            clearInterval(dropInterval); // Dừng việc thả quà
+            sled.remove();
+            setTimeout(createSantaSled, Math.random() * 10000 + 10000);
+        });
+    }
+    
+    function dropGift(sled) {
+        const gift = document.createElement('img');
+        gift.src = 'img/gift-bag.png';
+        gift.className = 'gift-bag';
+        
+        const sledRect = sled.getBoundingClientRect();
+        gift.style.left = (sledRect.left + sledRect.width/2 - 25) + 'px';
+        gift.style.top = (sledRect.top + sledRect.height) + 'px';
+        
+        document.body.appendChild(gift);
+        
+        // Tự động xóa gift sau 5 giây
+        const autoRemoveTimeout = setTimeout(() => {
+            gift.remove();
+        }, 5000);
+        
+        gift.addEventListener('click', () => {
+            // Xóa timeout khi gift được click
+            clearTimeout(autoRemoveTimeout);
+            
+            const giftGif = document.createElement('img');
+            giftGif.src = 'img/gift.gif';
+            giftGif.className = 'gift-gif';
+            document.body.appendChild(giftGif);
+            
+            setTimeout(() => {
+                giftGif.classList.add('show');
+                
+                setTimeout(() => {
+                    const boom = document.createElement('img');
+                    boom.src = 'img/boom.png';
+                    boom.className = 'boom-effect';
+                    document.body.appendChild(boom);
+                    
+                    requestAnimationFrame(() => {
+                        boom.classList.add('show');
+                    });
+                    
+                    giftGif.remove();
+                    
+                    setTimeout(() => {
+                        boom.remove();
+                        window.location.href = 'letter.html';
+                    }, 2000);
+                }, 3000);
+              
+            }, 100);
+            
+            gift.remove();
+        });
+        
+        requestAnimationFrame(() => {
+            gift.style.opacity = '1';
+            gift.style.animation = 'giftFall 8s forwards';
+        });
+    }
+    
+    // Add new snowflake explosion functions
+    function createSnowflake(x, y) {
+        const snowflake = document.createElement('div');
+        snowflake.className = 'snowflake-explosion';
+        snowflake.innerHTML = ['❅', '❆', '❄', '✻', '✺'][Math.floor(Math.random() * 5)];
+        snowflake.style.left = x + 'px';
+        snowflake.style.top = y + 'px';
+        snowflake.style.fontSize = Math.random() * 20 + 10 + 'px';
+        snowflake.style.color = ['#fff', '#e6f3ff', '#f0f9ff'][Math.floor(Math.random() * 3)];
+        
+        // Tính toán phạm vi 40% màn hình
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const maxDistance = Math.min(screenWidth, screenHeight) * 0.4; // 40% của kích thước màn hình nhỏ hơn
+        
+        // Tạo góc và vận tốc ngẫu nhiên với phạm vi giới hạn
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * maxDistance + maxDistance * 0.5; // Vn tốc tỉ lệ với khoảng cách tối đa
+        const vx = Math.cos(angle) * velocity;
+        const vy = Math.sin(angle) * velocity;
+        
+        document.body.appendChild(snowflake);
+        
+        // Animate với physics
+        let startTime = performance.now();
+        function animate(currentTime) {
+            const elapsed = (currentTime - startTime) / 1000;
+            const gravity = 800; // Điều chỉnh trọng lực để phù hợp với phạm vi nhỏ hơn
+            
+            // Tính toán vị trí với physics
+            const x = vx * elapsed;
+            const y = vy * elapsed + (gravity * elapsed * elapsed) / 2;
+            
+            // Kiểm tra nếu hoa tuyết đi quá phạm vi cho phép
+            const distance = Math.sqrt(x * x + y * y);
+            if (distance > maxDistance) {
+                snowflake.remove();
+                return;
+            }
+            
+            // Áp dụng transform
+            snowflake.style.transform = `translate(${x}px, ${y}px) rotate(${elapsed * 720}deg)`;
+            snowflake.style.opacity = Math.max(0, 1 - elapsed / 1.2);
+            
+            if (elapsed < 1.2) {
+                requestAnimationFrame(animate);
+            } else {
+                snowflake.remove();
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+
+    function explodeSnowflakes(x, y) {
+        const totalParticles = 150;
+        
+        for (let i = 0; i < totalParticles; i++) {
+            setTimeout(() => {
+                createSnowflake(x, y);
+            }, Math.random() * 100);
+        }
+    }
+    
+    createSantaSled();
+  </script>
+  
   <!-- partial:index.partial.html -->
   <svg class="mainSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
     viewBox="0 0 800 600">
@@ -101,10 +267,37 @@
       </g>
       <circle class="sparkle" fill="url(#dotGrad)" cx="0" cy="0" r="50" />
     </g>
-    <foreignObject id="endMessage" x="0" y="550" width="800" height="250">
-      <span class="endMessage">
-        Mai Huyen!!!!!!
-      </span>
+    <foreignObject id="endMessage" x="200" y="550" width="400" height="250">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width: 100%; text-align: center;">
+        <svg width="100%" height="100%" viewBox="0 0 400 100">
+          <defs>
+            <radialGradient id="textSparkleGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+              <stop offset="40%" style="stop-color:#FFFFFF;stop-opacity:0.6" />
+              <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0" />
+            </radialGradient>
+            
+            <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#ff69b4">
+                <animate attributeName="stop-color" 
+                         values="#ff69b4; #87ceeb; #98fb98; #dda0dd; #f0e68c; #ff69b4"
+                         dur="5s" repeatCount="indefinite"/>
+              </stop>
+              <stop offset="100%" style="stop-color:#87ceeb">
+                <animate attributeName="stop-color" 
+                         values="#87ceeb; #98fb98; #dda0dd; #f0e68c; #ff69b4; #87ceeb"
+                         dur="5s" repeatCount="indefinite"/>
+              </stop>
+            </linearGradient>
+          </defs>
+          <text class="drawText" x="50%" y="50%" text-anchor="middle" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+            𝓜𝓪𝓲 𝓗𝓾𝔂𝓮̂̀𝓷!!!
+          </text>
+          <circle class="textSparkle" fill="url(#textSparkleGrad)" cx="0" cy="0" r="2" />
+          <circle class="textSparkle" fill="url(#textSparkleGrad)" cx="0" cy="0" r="2" />
+          <circle class="textSparkle" fill="url(#textSparkleGrad)" cx="0" cy="0" r="2" />
+        </svg>
+      </div>
     </foreignObject>
   </svg>
 

@@ -11,6 +11,88 @@
                 y: -100, transformOrigin: "50% 50%"
             })
         })(); (function () { k = gsap.timeline({ onUpdate: t }); k.to(".pContainer, .sparkle", { duration: 6, motionPath: { path: ".treePath", autoRotate: !1 }, ease: "linear" }).to(".pContainer, .sparkle", { duration: 1, onStart: function () { e = !1 }, x: q[0].x, y: q[0].y }).to(".pContainer, .sparkle", { duration: 2, onStart: function () { e = !0 }, motionPath: { path: ".treeBottomPath", autoRotate: !1 }, ease: "linear" }, "-=0").from(".treeBottomMask", { duration: 2, drawSVG: "0% 0%", stroke: "#FFF", ease: "linear" }, "-=2") })(); c.from([".treePathMask",
-            ".treePotMask"], { drawSVG: "0% 0%", stroke: "#FFF", stagger: { each: 6 }, duration: gsap.utils.wrap([6, 1, 2]), ease: "linear" }).from(".treeStar", { duration: 3, scaleY: 0, scaleX: .15, transformOrigin: "50% 50%", ease: "elastic(1,0.5)" }, "-=4").to(".sparkle", { duration: 3, opacity: 0, ease: "rough({strength: 2, points: 100, template: linear, taper: both, randomize: true, clamp: false})" }, "-=0").to(".treeStarOutline", { duration: 1, opacity: 1, ease: "rough({strength: 2, points: 16, template: linear, taper: none, randomize: true, clamp: false})" },
-                "+=1"); c.add(k, 0); gsap.globalTimeline.timeScale(1.5); k.vars.onComplete = function () { gsap.to('foreignObject', { opacity: 1 }) }
-})();
+            ".treePotMask"], { drawSVG: "0% 0%", stroke: "#50C878", stagger: { each: 6 }, duration: gsap.utils.wrap([6, 1, 2]), ease: "linear" }).from(".treeStar", { duration: 3, scaleY: 0, scaleX: .15, transformOrigin: "50% 50%", ease: "elastic(1,0.5)" }, "-=4").to(".sparkle", { duration: 3, opacity: 0, ease: "rough({strength: 2, points: 100, template: linear, taper: both, randomize: true, clamp: false})" }, "-=0").to(".treeStarOutline", { duration: 1, opacity: 1, ease: "rough({strength: 2, points: 16, template: linear, taper: none, randomize: true, clamp: false})" },
+                "+=1"); c.add(k, 0); gsap.globalTimeline.timeScale(1.5); k.vars.onComplete = function () { 
+                    gsap.to('foreignObject', { 
+                        opacity: 1,
+                        onComplete: function() {
+                            let textPath = document.querySelector('.drawText');
+                            
+                            // Vẽ chữ
+                            gsap.from('.drawText', {
+                                duration: 3,
+                                drawSVG: "0%",
+                                ease: "linear",
+                                onComplete: function() {
+                                    // Fill màu sau khi vẽ xong với hiệu ứng gradient
+                                    gsap.to('.drawText', {
+                                        fill: 'url(#textGradient)',
+                                        duration: 1
+                                    });
+                                }
+                            });
+
+                            // Nhiều tia sáng hơn
+                            for(let i = 0; i < 3; i++) {
+                                gsap.to('.textSparkle', {
+                                    duration: 2,
+                                    motionPath: {
+                                        path: '.drawText',
+                                        align: '.drawText',
+                                        autoRotate: true,
+                                        alignOrigin: [0.5, 0.5],
+                                        start: i * 0.3, // Các sparkle bắt đầu ở các điểm khác nhau
+                                        end: 1
+                                    },
+                                    ease: "linear",
+                                    repeat: -1,
+                                    delay: i * 0.5
+                                });
+                            }
+                        }
+                    });
+                }
+
+function showChristmasLetter() {
+    const letter = document.createElement('img');
+    letter.src = 'img/christmas-letter.png';
+    letter.className = 'christmas-letter';
+    document.body.appendChild(letter);
+    
+    // Thêm hiệu ứng xuất hiện
+    setTimeout(() => {
+        letter.classList.add('show');
+    }, 100);
+    
+    // Xử lý click vào thư
+    letter.addEventListener('click', () => {
+        // Có thể thêm hiệu ứng mở thư ở đây
+        console.log('Letter clicked!');
+    });
+}
+
+function createMassiveSnowflakeExplosion() {
+    const centerX = window.innerWidth/2;
+    const centerY = window.innerHeight/2;
+    
+    for (let i = 0; i < 100; i++) {
+        const snowflake = document.createElement('div');
+        snowflake.className = 'snowflake-explosion';
+        snowflake.textContent = '❅';
+        snowflake.style.left = centerX + 'px';
+        snowflake.style.top = centerY + 'px';
+        snowflake.style.fontSize = Math.random() * 20 + 15 + 'px';
+        document.body.appendChild(snowflake);
+
+        gsap.to(snowflake, {
+            duration: Math.random() * 2 + 1,
+            x: (Math.random() - 0.5) * window.innerWidth * 1.5,
+            y: (Math.random() - 0.5) * window.innerHeight * 1.5,
+            rotation: Math.random() * 720 - 360,
+            opacity: 0,
+            ease: "power2.out",
+            onComplete: () => snowflake.remove()
+        });
+    }
+}
+})(); 
