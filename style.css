@@ -1,174 +1,174 @@
 @font-face {
-    font-family: 'mountains_of_christmasregular';
-    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/35984/mountainsofchristmas-webfont.woff2') format('woff2'),
-         url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/35984/mountainsofchristmas-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'mountains_of_christmasregular';
+  src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/35984/mountainsofchristmas-webfont.woff2') format('woff2'),
+       url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/35984/mountainsofchristmas-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 
 }
 body {
-  background-color:#151522;
-  overflow: hidden;
-    display: flex;
-  align-items: center;
-  justify-content: center; 
+background-color:#151522;
+overflow: hidden;
+  display: flex;
+align-items: center;
+justify-content: center; 
 }
 
 body,
 html {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+height: 100%;
+width: 100%;
+margin: 0;
+padding: 0;
 }
 
 
 svg{
-  width:90%;
-  height:90%;
-  visibility:hidden;
- 
+width:90%;
+height:90%;
+visibility:hidden;
+
 }
 
 .sparkle{
-  /* mix-blend-mode:luminosity */
+/* mix-blend-mode:luminosity */
 }
 #endMessage{
-  font-family: mountains_of_christmasregular;
-  font-size: 2rem;
-  text-anchor: middle;
-  text-align: center;
-  fill: #FFFFFF;
-  color: #FFFFFF;
-  opacity:0;
-  letter-spacing: 1px;
+font-family: mountains_of_christmasregular;
+font-size: 2rem;
+text-anchor: middle;
+text-align: center;
+fill: #FFFFFF;
+color: #FFFFFF;
+opacity:0;
+letter-spacing: 1px;
 }
 
 a {
-  color: white;
-  text-decoration: underline dotted #FFFFFF;
+color: white;
+text-decoration: underline dotted #FFFFFF;
 }
 a:visited {
-  color: red;
-  
+color: red;
+
 }
 
 .endMessage {
-  font-family: mountains_of_christmasregular;
-  font-size: 3rem;
-  text-anchor: middle;
-  text-align: center;
-  color: #FFFFFF;
-  opacity: 1;
-  letter-spacing: 2px;
-  white-space: nowrap;
-  border-right: 2px solid #FFFFFF;
-  width: 0;
-  display: inline-block;
-  overflow: hidden;
-  animation: typing 3s steps(12) forwards,
-             blink .5s step-end infinite alternate;
+font-family: mountains_of_christmasregular;
+font-size: 3rem;
+text-anchor: middle;
+text-align: center;
+color: #FFFFFF;
+opacity: 1;
+letter-spacing: 2px;
+white-space: nowrap;
+border-right: 2px solid #FFFFFF;
+width: 0;
+display: inline-block;
+overflow: hidden;
+animation: typing 3s steps(12) forwards,
+           blink .5s step-end infinite alternate;
 }
 
 @keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
+from { width: 0 }
+to { width: 100% }
 }
 
 @keyframes blink {
-  50% { border-color: transparent }
+50% { border-color: transparent }
 }
 
 .drawText {
-  font-family: mountains_of_christmasregular;
-  font-size: 3rem;
-  fill: none;
-  stroke: #FFFFFF;
-  stroke-width: 1.5;
-  animation: colorChange 5s linear infinite;
+font-family: mountains_of_christmasregular;
+font-size: 3rem;
+fill: none;
+stroke: #FFFFFF;
+stroke-width: 1.5;
+animation: colorChange 5s linear infinite;
 }
 
 @keyframes colorChange {
-  0% { stroke: #ff69b4; }
-  20% { stroke: #87ceeb; }
-  40% { stroke: #98fb98; }
-  60% { stroke: #dda0dd; }
-  80% { stroke: #f0e68c; }
-  100% { stroke: #ff69b4; }
+0% { stroke: #ff69b4; }
+20% { stroke: #87ceeb; }
+40% { stroke: #98fb98; }
+60% { stroke: #dda0dd; }
+80% { stroke: #f0e68c; }
+100% { stroke: #ff69b4; }
 }
 
 .textSparkle {
-    filter: blur(1px);
-    opacity: 0.8;
-    r: 2;
+  filter: blur(1px);
+  opacity: 0.8;
+  r: 2;
 }
 
 .drawText {
-    filter: drop-shadow(0 0 2px rgba(255,255,255,0.7))
-           drop-shadow(0 0 4px rgba(255,255,255,0.5));
+  filter: drop-shadow(0 0 2px rgba(255,255,255,0.7))
+         drop-shadow(0 0 4px rgba(255,255,255,0.5));
 }
 
 /* Thêm animation cho đường viền cây thông */
 .treePath, .treeBottomPath, .treePotMask {
-  stroke: #50C878; /* Màu xanh lá */
-  filter: drop-shadow(0 0 5px #50C878)
-         drop-shadow(0 0 10px #50C878);
-  animation: treeGlow 2s ease-in-out infinite alternate;
+stroke: #50C878; /* Màu xanh lá */
+filter: drop-shadow(0 0 5px #50C878)
+       drop-shadow(0 0 10px #50C878);
+animation: treeGlow 2s ease-in-out infinite alternate;
 }
 
 @keyframes treeGlow {
-  from {
-    stroke: #50C878;
-    filter: drop-shadow(0 0 5px #50C878)
-           drop-shadow(0 0 10px #50C878);
-  }
-  to {
-    stroke: #90EE90;
-    filter: drop-shadow(0 0 8px #90EE90)
-           drop-shadow(0 0 15px #90EE90)
-           drop-shadow(0 0 20px #90EE90);
-  }
+from {
+  stroke: #50C878;
+  filter: drop-shadow(0 0 5px #50C878)
+         drop-shadow(0 0 10px #50C878);
+}
+to {
+  stroke: #90EE90;
+  filter: drop-shadow(0 0 8px #90EE90)
+         drop-shadow(0 0 15px #90EE90)
+         drop-shadow(0 0 20px #90EE90);
+}
 }
 
 /* Điều chỉnh màu fill của cây */
 .tree path {
-  fill: #2E8B57; /* Màu xanh lá đậm cho phần fill */
+fill: #2E8B57; /* Màu xanh lá đậm cho phần fill */
 }
 
 /* Thêm hiệu ứng tuyết rơi */
 .snowflake {
-  color: #fff;
-  font-size: 1em;
-  font-family: Arial, sans-serif;
-  text-shadow: 0 0 5px #fff;
-  position: fixed;
-  top: -10%;
-  z-index: 9999;
-  user-select: none;
-  cursor: default;
-  animation-name: snowflakes-fall, snowflakes-shake;
-  animation-duration: 10s, 3s;
-  animation-timing-function: linear, ease-in-out;
-  animation-iteration-count: infinite, infinite;
-  animation-play-state: running, running;
+color: #fff;
+font-size: 1em;
+font-family: Arial, sans-serif;
+text-shadow: 0 0 5px #fff;
+position: fixed;
+top: -10%;
+z-index: 9999;
+user-select: none;
+cursor: default;
+animation-name: snowflakes-fall, snowflakes-shake;
+animation-duration: 10s, 3s;
+animation-timing-function: linear, ease-in-out;
+animation-iteration-count: infinite, infinite;
+animation-play-state: running, running;
 }
 
 @keyframes snowflakes-fall {
-  0% {
-    top: -10%;
-  }
-  100% {
-    top: 100%;
-  }
+0% {
+  top: -10%;
+}
+100% {
+  top: 100%;
+}
 }
 
 @keyframes snowflakes-shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(80px);
-  }
+0%, 100% {
+  transform: translateX(0);
+}
+50% {
+  transform: translateX(80px);
+}
 }
 
 /* Tạo độ trễ khác nhau cho từng bông tuyết */
@@ -185,155 +185,176 @@ a:visited {
 .snowflake:nth-of-type(11) { left: 65%; animation-delay: 10s, 2.5s; }
 
 .santa-sled {
-    position: fixed;
-    width: 100px;
-    height: auto;
-    z-index: 1000;
-    opacity: 0;
-    animation: flyAcross 15s linear infinite;
-    transform-origin: center center;
+  position: fixed;
+  width: 100px;
+  height: auto;
+  z-index: 1000;
+  opacity: 0;
+  animation: flyAcross 15s linear infinite;
+  transform-origin: center center;
 }
 
 @keyframes flyAcross {
-    0% {
-        opacity: 0;
-        left: -100px;
-        transform: translateY(0);
-    }
-    10% {
-        opacity: 1;
-    }
-    25% {
-        transform: translateY(150px);  /* Giảm xuống còn 1/2 */
-    }
-    50% {
-        transform: translateY(-150px); /* Giảm xuống còn 1/2 */
-    }
-    75% {
-        transform: translateY(100px);  /* Giảm xuống còn 1/2 */
-    }
-    90% {
-        opacity: 1;
-        transform: translateY(-50px);  /* Giảm xuống còn 1/2 */
-    }
-    100% {
-        opacity: 0;
-        left: calc(100% + 100px);
-        transform: translateY(0);
-    }
+  0% {
+      opacity: 0;
+      left: -100px;
+      transform: translateY(0);
+  }
+  10% {
+      opacity: 1;
+  }
+  25% {
+      transform: translateY(150px);  /* Giảm xuống còn 1/2 */
+  }
+  50% {
+      transform: translateY(-150px); /* Giảm xuống còn 1/2 */
+  }
+  75% {
+      transform: translateY(100px);  /* Giảm xuống còn 1/2 */
+  }
+  90% {
+      opacity: 1;
+      transform: translateY(-50px);  /* Giảm xuống còn 1/2 */
+  }
+  100% {
+      opacity: 0;
+      left: calc(100% + 100px);
+      transform: translateY(0);
+  }
 }
 
 .gift-bag {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    opacity: 0;
-    transition: transform 0.3s ease;
-    animation: giftFall 8s ease-in-out forwards;
+  position: fixed;
+  width: 50px;
+  height: auto;
+  z-index: 999;
+  opacity: 0;
+  cursor: pointer;
+  transition: all 0.5s ease;
 }
 
-.gift-bag:hover {
-    transform: scale(1.1);
+.gift-bag.zoomed {
+  position: fixed;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) scale(20);
+  transform-origin: center center;
 }
 
 @keyframes giftFall {
-    0% {
-        opacity: 0;
-        transform: translateY(0);
-    }
-    10% {
-        opacity: 1;
-    }
-    50% {
-        transform: translateY(37.5vh);
-        animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
-    }
-    100% {
-        transform: translateY(37.5vh);
-    }
+  0% {
+      opacity: 0;
+      transform: translateY(0);
+  }
+  10% {
+      opacity: 1;
+  }
+  50% {
+      transform: translateY(37.5vh); /* Dừng ở giữa */
+      animation-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1);
+  }
+  100% {
+      transform: translateY(37.5vh); /* Giữ nguyên vị trí */
+  }
 }
 
 .gift-gif {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    height: auto;
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: auto;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
 .gift-gif.show {
-    opacity: 1;
+  opacity: 1;
 }
 
 .snowflake-explosion {
-    position: fixed;
-    pointer-events: none;
-    animation: snowflakeExplosion 1.5s ease-out forwards;
-    z-index: 1001;
+  position: fixed;
+  pointer-events: none;
+  z-index: 1001;
+  animation: snowflakeFade 2s forwards;
 }
 
-@keyframes snowflakeExplosion {
-    0% {
-        transform: translate(0, 0) rotate(0deg) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0);
-        opacity: 0;
-    }
+@keyframes snowflakeFade {
+  0% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+  }
+  100% {
+      opacity: 0;
+      transform: scale(0) rotate(360deg);
+  }
+}
+
+@keyframes explode {
+  0% {
+      transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+      transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+  }
+}
+
+.gift-gif.explode {
+  animation: explode 0.5s forwards;
 }
 
 .christmas-letter {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    width: 300px;
-    height: auto;
-    z-index: 1000;
-    opacity: 0;
-    transition: all 0.5s ease-out;
-    cursor: pointer;
-    box-shadow: 0 0 20px rgba(255,255,255,0.3);
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 300px;
+  height: auto;
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.5s ease-out;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
 }
 
 .christmas-letter.show {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
 }
 
 .christmas-letter:hover {
-    transform: translate(-50%, -50%) scale(1.05);
+  transform: translate(-50%, -50%) scale(1.05);
 }
 
 .boom-effect {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    z-index: 1000;
-    width: 75vh;
-    height: auto;
-    opacity: 0;
-    pointer-events: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 1000;
+  width: 75vh;
+  height: auto;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .boom-effect.show {
-    animation: boomZoom 0.5s ease-out forwards;
+  animation: boomZoom 0.5s ease-out forwards;
 }
 
 @keyframes boomZoom {
-    0% {
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 0;
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
+  0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+  }
+  100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+  }
 }

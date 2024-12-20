@@ -79,26 +79,19 @@ function createMassiveSnowflakeExplosion() {
         const snowflake = document.createElement('div');
         snowflake.className = 'snowflake-explosion';
         snowflake.textContent = '❅';
-        
-        // Random transform values
-        const angle = Math.random() * Math.PI * 2;
-        const distance = Math.random() * (window.innerWidth/2);
-        const tx = Math.cos(angle) * distance;
-        const ty = Math.sin(angle) * distance;
-        const rot = Math.random() * 720 - 360;
-        
-        snowflake.style.setProperty('--tx', `${tx}px`);
-        snowflake.style.setProperty('--ty', `${ty}px`);
-        snowflake.style.setProperty('--rot', `${rot}deg`);
-        
         snowflake.style.left = centerX + 'px';
         snowflake.style.top = centerY + 'px';
         snowflake.style.fontSize = Math.random() * 20 + 15 + 'px';
         document.body.appendChild(snowflake);
-        
-        // Tự động xóa sau khi animation kết thúc
-        snowflake.addEventListener('animationend', () => {
-            snowflake.remove();
+
+        gsap.to(snowflake, {
+            duration: Math.random() * 2 + 1,
+            x: (Math.random() - 0.5) * window.innerWidth * 1.5,
+            y: (Math.random() - 0.5) * window.innerHeight * 1.5,
+            rotation: Math.random() * 720 - 360,
+            opacity: 0,
+            ease: "power2.out",
+            onComplete: () => snowflake.remove()
         });
     }
 }

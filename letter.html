@@ -1,464 +1,741 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  .background-iframe {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    z-index: -1;
-  }
-
-  /* Style cho phần gallery bên trái */
-  .left-gallery {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 30%;
-    height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    overflow-y: auto;
-    z-index: 1;
-  }
-
-  .gallery-item {
-    width: 100%;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    margin-bottom: 20px;
-    background-color: #fff;
-  }
-
-  .gallery-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.3s ease;
-  }
-
-  .gallery-item img:hover {
-    transform: scale(1.05);
-  }
-
-  .gallery-item video {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  
-  /* Điều chỉnh vị trí birthdayCard */
-  .birthdayCard {
-    position: relative;
-    width: 400px;
-    height: 550px;
-    cursor: pointer;
-    transform-style: preserve-3d;
-    transform: perspective(2500px);
-    transition: 1s;
-    z-index: 1;
-    margin: 50px 50px 0 auto;
-  }
-
-  /* Thêm media query để đảm bảo responsive */
-  @media screen and (max-width: 500px) {
-    .birthdayCard {
-      margin: 50px auto;
-      width: 90%;
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
     }
-  }
 
-  .cardFront {
-    position: relative;
-    background-color: #c41e3a;
-    width: 400px;
-    height: 550px;
-    overflow: hidden;
-    transform-origin: left;
-    box-shadow: inset 100px 20px 100px rgba(0,0,0,.13), 30px 0 50px rgba(0,0,0,0.1);
-    transition: .6s;
-  }
+    .background-iframe {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      z-index: -1;
+    }
 
-  /* Viền trang trí vàng kim phức tạp */
-  .cardFront::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    border: 2px solid #ffd700;
-    box-shadow: 
-      0 0 15px rgba(255, 215, 0, 0.3),
-      inset 0 0 15px rgba(255, 215, 0, 0.3);
-  }
+    /* Style cho phần gallery bên trái */
+    .left-gallery {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 30%;
+      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      overflow-y: auto;
+      z-index: 1;
+    }
 
-  /* Thêm góc trang trí */
-  .cardFront::after {
-    content: '';
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-    border: none;
-    background-image: 
-      linear-gradient(45deg, #ffd700 0%, transparent 2%),
-      linear-gradient(-45deg, #ffd700 0%, transparent 2%),
-      linear-gradient(135deg, #ffd700 0%, transparent 2%),
-      linear-gradient(-135deg, #ffd700 0%, transparent 2%);
-    background-position: 
-      top left, top right,
-      bottom left, bottom right;
-    background-size: 60px 60px;
-    background-repeat: no-repeat;
-  }
+    .gallery-item {
+      width: 100%;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      margin-bottom: 25px;
+      background-color: #fff;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      border: 2px solid rgba(255, 215, 0, 0.5);
+      background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      overflow: hidden;
+    }
 
-  .happy {
-    font-family: 'Mountains of Christmas', cursive;
-    font-size: 2.5em;
-    text-align: center;
-    margin: 80px 20px 40px;
-    background-image: linear-gradient(45deg, #ffd700 10%, #ffffff 50%, #ffd700 90%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-    letter-spacing: 2px;
-  }
+    /* Hiệu ứng viền sáng */
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, 
+        #ffd700 0%, 
+        #fff8e7 25%,
+        #ffd700 50%,
+        #fff8e7 75%,
+        #ffd700 100%
+      );
+      border-radius: 17px;
+      z-index: -1;
+      opacity: 0.6;
+      animation: borderGlow 3s linear infinite;
+    }
 
-  .cardInside {
-    position: absolute;
-    background-color: #2f5233;
-    width: 400px;
-    height: 550px;
-    z-index:-1;
-    left:0;
-    top:0;
-    box-shadow: inset 100px 20px 100px rgba(0,0,0,0.2);
-  }
+    /* Animation cho viền sáng */
+    @keyframes borderGlow {
+      0% {
+        filter: brightness(1) blur(3px);
+      }
+      50% {
+        filter: brightness(1.3) blur(3px);
+      }
+      100% {
+        filter: brightness(1) blur(3px);
+      }
+    }
 
-  /* Thêm đường viền trang trí cho mặt trong */
-  .cardInside::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    border: 2px solid rgba(255, 215, 0, 0.5);
-    box-shadow: 
-      0 0 15px rgba(255, 215, 0, 0.2),
-      inset 0 0 15px rgba(255, 215, 0, 0.2);
-  }
+    /* Thêm hiệu ứng phát sáng khi hover */
+    .gallery-item:hover::before {
+      opacity: 0.8;
+      filter: brightness(1.5) blur(3px);
+    }
 
-  .decorations {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
+    /* Thêm hiệu ứng góc sáng */
+    .gallery-item .corner-light {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: radial-gradient(circle, 
+        rgba(255, 215, 0, 0.8) 0%, 
+        transparent 70%
+      );
+      animation: cornerRotate 4s linear infinite;
+    }
 
-  /* Góc trang trí vàng kim */
-  .corner {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-image: linear-gradient(45deg, #ffd700, transparent);
-  }
+    .gallery-item .corner-light:nth-child(1) {
+      top: -25px;
+      left: -25px;
+    }
 
-  .corner:nth-child(1) { top: 30px; left: 30px; transform: rotate(0deg); }
-  .corner:nth-child(2) { top: 30px; right: 30px; transform: rotate(90deg); }
-  .corner:nth-child(3) { bottom: 30px; left: 30px; transform: rotate(270deg); }
-  .corner:nth-child(4) { bottom: 30px; right: 30px; transform: rotate(180deg); }
+    .gallery-item .corner-light:nth-child(2) {
+      top: -25px;
+      right: -25px;
+      animation-delay: 1s;
+    }
 
-  p {
-    font-family: 'Brush Script MT', cursive;
-    margin: 40px;
-    color: #ffffff;
-    font-size: 1.3em;
-    line-height: 1.5;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-  }
+    .gallery-item .corner-light:nth-child(3) {
+      bottom: -25px;
+      left: -25px;
+      animation-delay: 2s;
+    }
 
-  .back {
-    font-family: 'Mountains of Christmas', cursive;
-    font-size: 2em;
-    text-align: center;
-    margin: 60px 40px 40px;
-    background-image: linear-gradient(45deg, #ffd700 10%, #ffffff 50%, #ffd700 90%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-  }
+    .gallery-item .corner-light:nth-child(4) {
+      bottom: -25px;
+      right: -25px;
+      animation-delay: 3s;
+    }
 
-  /* Thêm hiệu ứng hover cho thiệp */
-  .birthdayCard:hover {
-    transform: perspective(2500px) rotate(5deg);
-    box-shadow: inset 100px 20px 100px rgba(0,0,0,.2), 0 10px 100px rgba(0,0,0,0.5);
-  }
+    @keyframes cornerRotate {
+      0% {
+        transform: rotate(0deg) scale(1);
+        opacity: 0.5;
+      }
+      50% {
+        transform: rotate(180deg) scale(1.2);
+        opacity: 0.8;
+      }
+      100% {
+        transform: rotate(360deg) scale(1);
+        opacity: 0.5;
+      }
+    }
 
-  .birthdayCard:hover .cardFront {
-    transform: rotateY(-160deg); 
-  }
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
 
-  /* Điều chỉnh transition cho cardFront */
-  .cardFront {
-    transform-origin: left;
-    transition: .6s;
-  }
+    .gallery-item img:hover {
+      transform: scale(1.05);
+    }
 
-  /* Style cho slideshow */
-  .slideshow {
-    position: relative;
-    overflow: hidden;
-    padding-bottom: 100%;
-    width: 100%;
-  }
+    .gallery-item video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
-  .slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    object-fit: cover;
-  }
+    /* Điều chỉnh vị trí birthdayCard */
+    .birthdayCard {
+      position: relative;
+      width: 400px;
+      height: 550px;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transform: perspective(2500px);
+      transition: 1s;
+      z-index: 1;
+      margin: 50px 50px 0 auto;
+    }
 
-  .slide.active {
-    opacity: 1;
-  }
+    /* Thêm media query để đảm bảo responsive */
+    @media screen and (max-width: 500px) {
+      .birthdayCard {
+        margin: 50px auto;
+        width: 90%;
+      }
+    }
 
-  /* Style cho video container */
-  .video-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-  }
+    .cardFront {
+      position: relative;
+      background-color: #c41e3a;
+      width: 400px;
+      height: 550px;
+      overflow: hidden;
+      transform-origin: left;
+      box-shadow: inset 100px 20px 100px rgba(0, 0, 0, .13), 30px 0 50px rgba(0, 0, 0, 0.1);
+      transition: .6s;
+    }
 
-  .video-container video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+    /* Viền trang trí vàng kim phức tạp */
+    .cardFront::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      border: 2px solid #ffd700;
+      box-shadow:
+        0 0 15px rgba(255, 215, 0, 0.3),
+        inset 0 0 15px rgba(255, 215, 0, 0.3);
+    }
 
-  /* Style cho falling items */
-  .falling-items {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-  }
+    /* Thêm góc trang trí */
+    .cardFront::after {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      border: none;
+      background-image:
+        linear-gradient(45deg, #ffd700 0%, transparent 2%),
+        linear-gradient(-45deg, #ffd700 0%, transparent 2%),
+        linear-gradient(135deg, #ffd700 0%, transparent 2%),
+        linear-gradient(-135deg, #ffd700 0%, transparent 2%);
+      background-position:
+        top left, top right,
+        bottom left, bottom right;
+      background-size: 60px 60px;
+      background-repeat: no-repeat;
+    }
 
-  .falling-item {
-    position: fixed;
-    width: 15px;
-    height: 15px;
-    pointer-events: none;
-    animation: fallAndRotate linear infinite;
-  }
+    .happy {
+      font-family: 'Mountains of Christmas', cursive;
+      font-size: 2.5em;
+      text-align: center;
+      margin: 80px 20px 40px;
+      background-image: linear-gradient(45deg, #ffd700 10%, #ffffff 50%, #ffd700 90%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      letter-spacing: 2px;
+    }
 
-  @keyframes fallAndRotate {
-    0% {
+    .cardInside {
+      position: absolute;
+      background-color: #2f5233;
+      width: 400px;
+      height: 550px;
+      z-index: -1;
+      left: 0;
+      top: 0;
+      box-shadow: inset 100px 20px 100px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Thêm đường viền trang trí cho mặt trong */
+    .cardInside::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      border: 2px solid rgba(255, 215, 0, 0.5);
+      box-shadow:
+        0 0 15px rgba(255, 215, 0, 0.2),
+        inset 0 0 15px rgba(255, 215, 0, 0.2);
+    }
+
+    .decorations {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* Góc trang trí vàng kim */
+    .corner {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-image: linear-gradient(45deg, #ffd700, transparent);
+    }
+
+    .corner:nth-child(1) {
+      top: 30px;
+      left: 30px;
+      transform: rotate(0deg);
+    }
+
+    .corner:nth-child(2) {
+      top: 30px;
+      right: 30px;
+      transform: rotate(90deg);
+    }
+
+    .corner:nth-child(3) {
+      bottom: 30px;
+      left: 30px;
+      transform: rotate(270deg);
+    }
+
+    .corner:nth-child(4) {
+      bottom: 30px;
+      right: 30px;
+      transform: rotate(180deg);
+    }
+
+    p {
+      /* font-family: 'Brush Script MT', cursive; */
+      font-family: Comic San MS;
+      margin: 40px;
+      color: #ffffff;
+      font-size: 1.4em;
+      line-height: 1.5;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      font-style: italic;
+    }
+
+    .back {
+      font-family: 'Mountains of Christmas', cursive;
+      font-size: 2em;
+      text-align: center;
+      margin: 60px 40px 40px;
+      background-image: linear-gradient(45deg, #ffd700 10%, #ffffff 50%, #ffd700 90%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Thêm hiệu ứng hover cho thiệp */
+    .birthdayCard:hover {
+      transform: perspective(2500px) rotate(5deg);
+      box-shadow: inset 100px 20px 100px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, 0.5);
+    }
+
+    .birthdayCard:hover .cardFront {
+      transform: rotateY(-160deg);
+    }
+
+    /* Điều chỉnh transition cho cardFront */
+    .cardFront {
+      transform-origin: left;
+      transition: .6s;
+    }
+
+    /* Style cho slideshow */
+    .slideshow {
+      position: relative;
+      overflow: hidden;
+      padding-bottom: 100%;
+      width: 100%;
+      perspective: 2000px;
+      transform-style: preserve-3d;
+      background: #000;
+    }
+
+    .slideshow .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transform-origin: right;
+      transform: rotateY(-90deg);
+      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+      backface-visibility: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    .slideshow .slide.active {
+      opacity: 1;
+      transform: rotateY(0deg);
+      z-index: 2;
+    }
+
+    .slideshow .slide.exit {
+      transform-origin: left;
+      transform: rotateY(90deg);
+      opacity: 0;
+      z-index: 1;
+    }
+
+    /* Hiệu ứng bóng khi lật */
+    .slideshow .slide::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.3) 0%,
+        rgba(0,0,0,0) 50%,
+        rgba(0,0,0,0.3) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .slideshow .slide.active::after {
+      opacity: 1;
+    }
+
+    /* Style cho video container */
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      transition: all 0.4s ease;
+    }
+
+    .video-container:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Style cho falling items */
+    .falling-items {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .falling-item {
+      position: fixed;
+      width: 15px;
+      height: 15px;
+      pointer-events: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
         transform: translateY(-5vh) rotate(0deg);
         opacity: 1;
-    }
-    100% {
+      }
+
+      100% {
         transform: translateY(105vh) rotate(360deg);
         opacity: 0.7;
+      }
     }
-  }
 
-  /* Media queries cho thiết bị di động */
-  @media screen and (max-width: 768px) {
-    /* Giữ nguyên layout gallery bên trái */
-    .left-gallery {
+    /* Media queries cho thiết bị di động */
+    @media screen and (max-width: 768px) {
+
+      /* Giữ nguyên layout gallery bên trái */
+      .left-gallery {
         width: 30%;
         height: 100vh;
         position: fixed;
         padding: 10px;
-    }
+      }
 
-    .gallery-item {
+      .gallery-item {
         margin-bottom: 15px;
-    }
+      }
 
-    /* Thu nhỏ decorative items */
-    .decorative-item {
+      /* Thu nhỏ decorative items */
+      .decorative-item {
         width: 6px;
         height: 6px;
-    }
+      }
 
-    .top-left { top: 3px; left: 3px; }
-    .top-right { top: 3px; right: 3px; }
-    .bottom-left { bottom: 3px; left: 3px; }
-    .bottom-right { bottom: 3px; right: 3px; }
+      .top-left {
+        top: 3px;
+        left: 3px;
+      }
 
-    /* Thu nhỏ falling items */
-    .falling-item {
+      .top-right {
+        top: 3px;
+        right: 3px;
+      }
+
+      .bottom-left {
+        bottom: 3px;
+        left: 3px;
+      }
+
+      .bottom-right {
+        bottom: 3px;
+        right: 3px;
+      }
+
+      /* Thu nhỏ falling items */
+      .falling-item {
         width: 12px;
         height: 12px;
-    }
+      }
 
-    /* Thu nhỏ birthdayCard nhưng giữ nguyên vị trí */
-    .birthdayCard {
+      /* Thu nhỏ birthdayCard nhưng giữ nguyên vị trí */
+      .birthdayCard {
         width: 300px;
         height: 412px;
         margin: 50px 50px 0 auto;
         transform-style: preserve-3d;
         transform: perspective(2500px);
-    }
+      }
 
-    .cardFront, .cardInside {
+      .cardFront,
+      .cardInside {
         width: 300px;
         height: 412px;
-    }
+      }
 
-    /* Thu nhỏ viền trang trí vàng kim */
-    .cardFront::before {
+      /* Thu nhỏ viền trang trí vàng kim */
+      .cardFront::before {
         top: 15px;
         left: 15px;
         right: 15px;
         bottom: 15px;
-    }
+      }
 
-    .cardFront::after {
+      .cardFront::after {
         top: 10px;
         left: 10px;
         right: 10px;
         bottom: 10px;
         background-size: 40px 40px;
-    }
+      }
 
-    .cardInside::before {
+      .cardInside::before {
         top: 15px;
         left: 15px;
         right: 15px;
         bottom: 15px;
-    }
+      }
 
-    /* Thu nhỏ font size và margin */
-    .happy {
+      /* Thu nhỏ font size và margin */
+      .happy {
         font-size: 2em;
         margin: 60px 15px 30px;
-    }
+      }
 
-    .back {
+      .back {
         font-size: 1.5em;
         margin: 40px 20px 30px;
-    }
+      }
 
-    p {
+      p {
         font-size: 1em;
         margin: 30px;
-    }
+      }
 
-    .name {
+      .name {
         margin-top: 20px;
+      }
     }
-  }
 
-  /* Media queries cho màn hình rất nhỏ */
-  @media screen and (max-width: 480px) {
-    .birthdayCard {
+    /* Media queries cho màn hình rất nhỏ */
+    @media screen and (max-width: 480px) {
+      .birthdayCard {
         width: 250px;
         height: 343px;
         margin: 30px 30px 0 auto;
-    }
+      }
 
-    .cardFront, .cardInside {
+      .cardFront,
+      .cardInside {
         width: 250px;
         height: 343px;
-    }
+      }
 
-    /* Thu nhỏ viền trang trí thêm */
-    .cardFront::before {
+      /* Thu nhỏ viền trang trí thêm */
+      .cardFront::before {
         top: 10px;
         left: 10px;
         right: 10px;
         bottom: 10px;
-    }
+      }
 
-    .cardFront::after {
+      .cardFront::after {
         top: 8px;
         left: 8px;
         right: 8px;
         bottom: 8px;
         background-size: 30px 30px;
-    }
+      }
 
-    .cardInside::before {
+      .cardInside::before {
         top: 10px;
         left: 10px;
         right: 10px;
         bottom: 10px;
-    }
+      }
 
-    /* Thu nhỏ font size và margin thêm */
-    .happy {
+      /* Thu nhỏ font size và margin thêm */
+      .happy {
         font-size: 1.8em;
         margin: 50px 12px 25px;
-    }
+      }
 
-    .back {
+      .back {
         font-size: 1.3em;
         margin: 30px 15px 25px;
-    }
+      }
 
-    p {
+      p {
         font-size: 0.9em;
         margin: 25px;
-    }
+      }
 
-    .name {
+      .name {
         margin-top: 15px;
-    }
+      }
 
-    /* Thu nhỏ decorative và falling items thêm */
-    .decorative-item {
+      /* Thu nhỏ decorative và falling items thêm */
+      .decorative-item {
         width: 5px;
         height: 5px;
-    }
+      }
 
-    .falling-item {
+      .falling-item {
         width: 10px;
         height: 10px;
+      }
     }
-  }
 
-</style>
+    /* Thêm hiệu ứng overlay khi hover */
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
 
-<!-- Thêm font Giáng sinh -->
-<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
-  </head>
+    .gallery-item:hover::after {
+      opacity: 1;
+    }
+
+    /* Hiệu ứng xuất hiện cho ảnh và video */
+    .gallery-item {
+      animation: appear 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes appear {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Delay xuất hiện lần lượt cho từng item */
+    .gallery-item:nth-child(1) {
+      animation-delay: 0.2s;
+    }
+    .gallery-item:nth-child(2) {
+      animation-delay: 0.4s;
+    }
+    /* ... thêm delay cho các item khác nếu cần ... */
+
+    /* Hiệu ứng shine cho viền */
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      transform: skewX(-25deg);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% {
+        left: -100%;
+      }
+      20%, 100% {
+        left: 200%;
+      }
+    }
+
+    /* Style cho happy dance gif */
+    .happy-dance {
+      position: absolute;
+      left: -100px;
+      top: 85%;
+      transform: translateY(-50%);
+      width: 150px;
+      height: 150px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 1.2s ease-in-out;
+      z-index: 10;
+    }
+
+    /* Hiệu ứng khi hover vào birthdayCard */
+    .birthdayCard:hover .happy-dance {
+      opacity: 1;
+      visibility: visible;
+      left: 70%;
+      transition-delay: 0.3s;
+    }
+  </style>
+
+  <!-- Thêm font Giáng sinh -->
+  <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+</head>
+
 <body>
   <!-- Thêm iframe làm background -->
   <iframe src="index.html" class="background-iframe"></iframe>
@@ -466,68 +743,129 @@
   <!-- Thêm phần gallery bên trái -->
   <div class="left-gallery">
     <div class="gallery-item slideshow">
-        <img src="img/anh1.jpg" alt="Image 1" class="slide active">
-        <img src="img/anh2.png" alt="Image 2" class="slide">
-        <img src="img/anh3.png" alt="Image 3" class="slide">
+      <img src="img/anh1.jpg" alt="Image 1" class="slide active">
+      <img src="img/anh2.png" alt="Image 2" class="slide">
+      <img src="img/anh3.png" alt="Image 3" class="slide">
     </div>
     <div class="gallery-item">
-        <div class="video-container">
-            <video autoplay loop muted>
-                <source src="img/mv.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
+      <div class="corner-light"></div>
+      <div class="corner-light"></div>
+      <div class="corner-light"></div>
+      <div class="corner-light"></div>
+      <div class="video-container">
+        <video autoplay loop muted>
+          <source src="img/mv.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
     </div>
+
   </div>
+
 
   <!-- Giữ nguyên nội dung thẻ thư -->
   <div class="birthdayCard">
+    <img src="img/happy-dance-unscreen.gif" class="happy-dance" alt="happy dance">
     <div class="cardFront">
-        <div class="decorations">
-            <div class="corner"></div>
-            <div class="corner"></div>
-            <div class="corner"></div>
-            <div class="corner"></div>
-        </div>
-        <h3 class="happy">MERRY CHRISTMAS <br>Mai Huyền!</h3>
+      <div class="decorations">
+        <div class="corner"></div>
+        <div class="corner"></div>
+        <div class="corner"></div>
+        <div class="corner"></div>
+      </div>
+      <h3 class="happy">MERRY CHRISTMAS <br> <br>Mai Huyền!</h3>
     </div>
     <div class="cardInside">
-        <h3 class="back">GIÁNG SINH VUI VẺ!</h3>
-        <p>Dear Mai Huyền ,</p>
-        <p>Bà ơi, Giáng sinh an lành nha! 🎄✨ Chúc bà có một mùa Giáng sinh ấm áp, tràn ngập niềm vui và tiếng cười bên gia đình. 🎅🎁 Bà nhớ giữ gìn sức khỏe, mặc áo ấm, ăn uống đầy đủ để đón Giáng sinh vui vẻ nhé! 🥰❤️3000 </p>
-        <p class="name">From: tgrey.hoc.it</p>
+      <h3 class="back">GIÁNG SINH VUI VẺ!</h3>
+      <p>Dear Mai Huyền ,</p>
+      <p>Bà ơi, Giáng sinh an lành nha! 🎄✨ Chúc bà có một mùa Giáng sinh ấm áp, tràn ngập niềm vui và tiếng cười bên
+        gia đình. 🎅🎁 Bà nhớ giữ gìn sức khỏe, mặc áo ấm, ăn uống đầy đủ để đón Giáng sinh vui vẻ nhé! 🥰❤️3000 </p>
+      <p class="name">From: tgrey.hoc.it</p>
     </div>
   </div>
 
   <script>
     // Hàm điều khiển slideshow
     function startSlideshow() {
-        const slides = document.querySelectorAll('.slide');
-        let currentSlide = 0;
+      const slides = document.querySelectorAll('.slide');
+      let currentSlide = 0;
+      let nextSlide = 1;
+      let isAnimating = false;
 
-        setInterval(() => {
-            // Ẩn slide hiện tại
-            slides[currentSlide].classList.remove('active');
-            
-            // Chuyển đến slide tiếp theo
-            currentSlide = (currentSlide + 1) % slides.length;
-            
-            // Hiển thị slide mới
-            slides[currentSlide].classList.add('active');
-        }, 3000); // Đổi ảnh sau mỗi 3 giây
+      function transitionSlide() {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        // Thêm class exit cho slide hiện tại
+        slides[currentSlide].classList.add('exit');
+        slides[currentSlide].classList.remove('active');
+        
+        // Hiển thị slide tiếp theo
+        slides[nextSlide].classList.add('active');
+        
+        // Đợi animation hoàn thành
+        setTimeout(() => {
+          slides[currentSlide].classList.remove('exit');
+          currentSlide = nextSlide;
+          nextSlide = (nextSlide + 1) % slides.length;
+          isAnimating = false;
+        }, 1000);
+      }
+
+      // Khởi tạo slide đầu tiên
+      slides[0].classList.add('active');
+
+      // Chuyển slide mỗi 3 giây
+      let intervalId = setInterval(transitionSlide, 3000);
+
+      // Dừng khi hover
+      const slideshow = document.querySelector('.slideshow');
+      slideshow.addEventListener('mouseenter', () => clearInterval(intervalId));
+      slideshow.addEventListener('mouseleave', () => {
+        intervalId = setInterval(transitionSlide, 3000);
+      });
     }
+
+    // Thêm lazy loading cho video
+    document.addEventListener('DOMContentLoaded', function() {
+      const videos = document.querySelectorAll('video');
+      
+      const videoOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      const videoObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const video = entry.target;
+            video.play();
+            video.style.opacity = 1;
+            observer.unobserve(video);
+          }
+        });
+      }, videoOptions);
+
+      videos.forEach(video => {
+        video.style.opacity = 0;
+        video.style.transition = 'opacity 0.5s ease';
+        videoObserver.observe(video);
+      });
+    });
 
     // Khởi chạy slideshow khi trang load xong
     window.addEventListener('load', startSlideshow);
 
-    // Mảng chứa đường dẫn các hình ảnh
+    // Mng chứa đường dẫn các hình ảnh
     const items = [
-        'img/santa-sled.png',
-        'img/snowman.png',
-        'img/gift-bag.png',
-        'img/candy-cane.png',
-        'img/hat.png',
-        'img/mistletoe.png'
+      'img/santa-sled.png',
+      'img/snowman.png',
+      'img/gift-bag.png',
+      'img/candy-cane.png',
+      'img/hat.png',
+      'img/mistletoe.png'
     ];
 
     // Tạo container cho falling items
@@ -537,28 +875,29 @@
 
     // Hàm tạo một item rơi
     function createFallingItem() {
-        const item = document.createElement('img');
-        item.src = items[Math.floor(Math.random() * items.length)];
-        item.className = 'falling-item';
-        
-        // Random vị trí xuất hiện
-        const startPositionLeft = Math.random() * 100;
-        item.style.left = startPositionLeft + 'vw';
-        
-        // Random thời gian rơi (8-12s)
-        const fallDuration = 8 + Math.random() * 4;
-        item.style.animationDuration = fallDuration + 's';
-        
-        container.appendChild(item);
-        
-        // Xóa item sau khi animation kết thúc
-        item.addEventListener('animationend', () => {
-            item.remove();
-        });
+      const item = document.createElement('img');
+      item.src = items[Math.floor(Math.random() * items.length)];
+      item.className = 'falling-item';
+
+      // Random vị trí xuất hiện
+      const startPositionLeft = Math.random() * 100;
+      item.style.left = startPositionLeft + 'vw';
+
+      // Random thời gian rơi (8-12s)
+      const fallDuration = 8 + Math.random() * 4;
+      item.style.animationDuration = fallDuration + 's';
+
+      container.appendChild(item);
+
+      // Xóa item sau khi animation kết thúc
+      item.addEventListener('animationend', () => {
+        item.remove();
+      });
     }
 
     // Tạo item mới mỗi 500ms
     setInterval(createFallingItem, 500);
   </script>
 </body>
+
 </html>
